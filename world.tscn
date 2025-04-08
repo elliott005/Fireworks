@@ -1,0 +1,82 @@
+[gd_scene load_steps=11 format=3 uid="uid://t37ilphi1mmt"]
+
+[ext_resource type="Script" uid="uid://4s1xr2o7hpiu" path="res://world.gd" id="1_aqk2v"]
+[ext_resource type="PackedScene" uid="uid://tcq4oek2y8hs" path="res://firework.tscn" id="1_f3sb7"]
+[ext_resource type="Shader" uid="uid://cjia7jvx5aej4" path="res://background.gdshader" id="1_tlwt5"]
+[ext_resource type="Shader" uid="uid://co2hxfcwnab8g" path="res://name.gdshader" id="2_fj7yv"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_tlwt5"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_aqk2v"]
+noise = SubResource("FastNoiseLite_tlwt5")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_aqk2v"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_tlwt5"]
+noise = SubResource("FastNoiseLite_aqk2v")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aqk2v"]
+shader = ExtResource("1_tlwt5")
+shader_parameter/waterNoise = SubResource("NoiseTexture2D_tlwt5")
+shader_parameter/waterDistortionNoise = SubResource("NoiseTexture2D_aqk2v")
+shader_parameter/waterColor = Color(0.117647, 0, 0.580392, 1)
+shader_parameter/colorCorection = 0.35
+shader_parameter/distortionForce = 0.08
+shader_parameter/WDBrightness = 1.5
+shader_parameter/WDFreq = 0.6
+shader_parameter/WDSize = 0.9
+shader_parameter/WDSpeed = 4.0
+shader_parameter/tiling = Vector2(1, 1)
+shader_parameter/offSetSpeed = Vector2(0.1, 0.1)
+shader_parameter/backGroundDirX = 0.01
+shader_parameter/backGroundDirY = 0.01
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tlwt5"]
+shader = ExtResource("2_fj7yv")
+shader_parameter/appear_time = 3.5
+shader_parameter/appear_speed = 0.2
+shader_parameter/start_time = 0.0
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_aqk2v")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_aqk2v")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NameLabel" type="Label" parent="CanvasLayer/CenterContainer"]
+material = SubResource("ShaderMaterial_tlwt5")
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0.780392, 1)
+theme_override_font_sizes/font_size = 64
+text = "Bla"
+
+[node name="Fireworks" type="Node2D" parent="."]
+
+[node name="Firework" parent="Fireworks" instance=ExtResource("1_f3sb7")]
+position = Vector2(560, 768)
+
+[node name="Firework2" parent="Fireworks" instance=ExtResource("1_f3sb7")]
+position = Vector2(312, 704)
+
+[node name="Firework3" parent="Fireworks" instance=ExtResource("1_f3sb7")]
+position = Vector2(744, 704)
+
+[node name="Firework4" parent="Fireworks" instance=ExtResource("1_f3sb7")]
+position = Vector2(984, 680)
+
+[node name="Firework5" parent="Fireworks" instance=ExtResource("1_f3sb7")]
+position = Vector2(128, 728)

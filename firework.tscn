@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://tcq4oek2y8hs"]
+
+[ext_resource type="Shader" uid="uid://p4dxi2em4dox" path="res://firework.gdshader" id="1_g2i6i"]
+[ext_resource type="Script" uid="uid://d26hk0q4qwhgr" path="res://firework.gd" id="1_skfqf"]
+[ext_resource type="Texture2D" uid="uid://c487hq1qp34ja" path="res://icon.svg" id="2_80ye1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g2i6i"]
+shader = ExtResource("1_g2i6i")
+shader_parameter/inner_radius = 0.1
+shader_parameter/inner_color = Color(1, 0.462745, 0, 1)
+shader_parameter/middle_radius = 0.3
+shader_parameter/middle_color = Color(0.494118, 0, 0, 1)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_g2i6i"]
+diffuse_texture = ExtResource("2_80ye1")
+
+[node name="Firework" type="Node2D"]
+script = ExtResource("1_skfqf")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="Stars" type="Node2D" parent="."]
+
+[node name="Polygon2D" type="Polygon2D" parent="Stars"]
+material = SubResource("ShaderMaterial_g2i6i")
+color = Color(1, 1, 1, 0)
+texture = SubResource("CanvasTexture_g2i6i")
+polygon = PackedVector2Array(-16, -16, 0, -40, 16, -16, 40, 0, 16, 16, 0, 40, -16, 16, -40, 0)
+
+[node name="StarTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="StarTimer" to="." method="_on_star_timer_timeout"]
